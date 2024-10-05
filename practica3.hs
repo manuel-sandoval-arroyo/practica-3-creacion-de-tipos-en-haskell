@@ -40,3 +40,10 @@ insertarIndice (Node x xs) i a =
             then Node a (Node x xs)
             else Node x (insertarIndice xs (i - 1) a)
         else error "Índice fuera del rango permitido"
+
+recorrerLista :: List a -> Int -> List a
+recorrerLista Void i = Void
+recorrerLista (Node x xs) i = 
+    if i == 0
+        then Node x xs
+        else recorrerLista (insertarIndice xs (longitud xs) x) (i - 1)
