@@ -23,3 +23,12 @@ conjunto (Node x xs) =
         then Node x (conjunto xs)
         else conjunto xs
 
+eliminarIndice :: List a -> Int -> List a
+eliminarIndice Void _ = error "No se puede eliminar un elemento de una lista vacía"
+eliminarIndice (Node x xs) i = 
+    if i >= 0 && i < longitud (Node x xs)
+        then if i == 0
+            then xs
+            else Node x (eliminarIndice xs (i - 1))
+        else error "Índice fuera del rango permitido"
+
