@@ -25,25 +25,20 @@ conjunto (Node x xs) =
 
 eliminarIndice :: List a -> Int -> List a
 eliminarIndice Void _ = error "No se puede eliminar un elemento de una lista vacía"
-eliminarIndice (Node x xs) i = 
-    if i >= 0 && i < longitud (Node x xs)
-        then if i == 0
-            then xs
-            else Node x (eliminarIndice xs (i - 1))
-        else error "Índice fuera del rango permitido"
+eliminarIndice (Node x xs) 0 = xs
+eliminarIndice (Node x xs) i = if i > 0 && i < longitud (Node x xs) 
+    then Node x (eliminarIndice xs (i - 1))
+    else error "Índice fuera del rango permitido"
 
 insertarIndice :: List a -> Int -> a -> List a
 insertarIndice Void i a = if i == 0 then Node a Void else error "Índice fuera del rango permitido"
-insertarIndice (Node x xs) i a = 
-    if i >= 0 && i <= longitud (Node x xs)
-        then if i == 0
-            then Node a (Node x xs)
-            else Node x (insertarIndice xs (i - 1) a)
-        else error "Índice fuera del rango permitido"
+insertarIndice (Node x xs) 0 a = Node a (Node x xs)
+
+insertarIndice (Node x xs) i a = if i > 0 && i <= longitud (Node x xs)
+    then Node x (insertarIndice xs (i - 1) a)
+    else error "Índice fuera del rango permitido"
 
 recorrerLista :: List a -> Int -> List a
 recorrerLista Void i = Void
-recorrerLista (Node x xs) i = 
-    if i == 0
-        then Node x xs
-        else recorrerLista (insertarIndice xs (longitud xs) x) (i - 1)
+recorrerLista (Node x xs) 0 = Node x xs
+recorrerLista (Node x xs) i = recorrerLista (insertarIndice xs (longitud xs) x) (i - 1)
